@@ -18,7 +18,7 @@ public class ConfigLoader {
         return configLoader;
     }
 
-    public String getBankName() {
+    public String getKartName() {
         String prop = properties.getProperty("bank_name");
         if(prop != null)
             return prop;

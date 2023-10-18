@@ -1,23 +1,33 @@
-import banks.Bank;
-import banks.CitiBank;
-import banks.HdfcBank;
-import org.testng.annotations.BeforeSuite;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import karts.kart.Kart;
+import karts.amazon.AmazonKart;
+import karts.flipkart.FlipKart;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeTest;
 import utils.ConfigLoader;
 
 public class BaseTest {
 
-    protected Bank bank;
+    protected Kart kart;
+    protected WebDriver driver;
 
-    @BeforeSuite
+    @BeforeTest
     public void setUpBank() {
-        String bankName = ConfigLoader.getInstance().getBankName();
-        switch (bankName) {
-            case "hdfc" :
-                bank = new HdfcBank();
+        setUpBrowser();
+        String kartName = ConfigLoader.getInstance().getKartName();
+        switch (kartName) {
+            case "flipkart" :
+                kart = new FlipKart(driver);
                 break;
-            case "citi" :
-                bank = new CitiBank();
+            case "amazon" :
+                kart = new AmazonKart(driver);
                 break;
         }
+    }
+
+    private void setUpBrowser() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
     }
 }
